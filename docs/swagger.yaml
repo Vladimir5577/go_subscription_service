@@ -1,0 +1,181 @@
+definitions:
+  model.CreateSubscriptionRequest:
+    properties:
+      end_date:
+        type: string
+      price:
+        type: integer
+      service_name:
+        maxLength: 150
+        minLength: 3
+        type: string
+      start_date:
+        type: string
+      user_id:
+        type: string
+    required:
+    - price
+    - service_name
+    - start_date
+    - user_id
+    type: object
+  model.Subscription:
+    properties:
+      created_at:
+        type: string
+      end_date:
+        type: string
+      id:
+        type: string
+      price:
+        type: integer
+      service_name:
+        type: string
+      start_date:
+        type: string
+      updated_at:
+        type: string
+      user_id:
+        type: string
+    type: object
+  model.UpdateSubscriptionRequest:
+    properties:
+      end_date:
+        type: string
+      id:
+        type: string
+      price:
+        type: integer
+      service_name:
+        maxLength: 150
+        minLength: 3
+        type: string
+      start_date:
+        type: string
+      user_id:
+        type: string
+    required:
+    - id
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: This is a server for user subscriptions.
+  title: Swagger Subscription Service
+  version: "1.0"
+paths:
+  /subscription:
+    post:
+      consumes:
+      - application/json
+      description: Create subscription
+      parameters:
+      - description: create subscription
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/model.CreateSubscriptionRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: strig
+      summary: Create subscription
+      tags:
+      - subscriptions
+    put:
+      consumes:
+      - application/json
+      description: Update subscription
+      parameters:
+      - description: update subscription
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/model.UpdateSubscriptionRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: strig
+      summary: Update subscription
+      tags:
+      - subscriptions
+  /subscription/{id}:
+    delete:
+      description: Delete subscriptions by id
+      parameters:
+      - description: Subscription Id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: strig
+      summary: Delete subscription by id
+      tags:
+      - subscriptions
+    get:
+      description: Get subscriptions by id
+      parameters:
+      - description: Subscription Id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: strig
+      summary: Get subscription by id
+      tags:
+      - subscriptions
+  /subscriptions:
+    get:
+      description: Get add subscriptions
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.Subscription'
+            type: array
+      summary: Get add subscriptions
+      tags:
+      - subscriptions
+  /subscriptions/total_summ:
+    get:
+      description: Get summ subscriptions
+      parameters:
+      - description: Subscription Id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: strig
+      summary: Get summ subscriptions
+      tags:
+      - subscriptions
+swagger: "2.0"
