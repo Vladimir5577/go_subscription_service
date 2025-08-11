@@ -10,15 +10,6 @@ import (
 	"github.com/Masterminds/squirrel"
 )
 
-type SubscriptionRepositoryInterface interface {
-	Create(model.CreateSubscriptionRequest) (string, error)
-	GetById(model.GetSubscriptionByIdRequest) (model.Subscription, error)
-	Update(model.UpdateSubscriptionRequest) (int64, error)
-	Delete(model.DeleteSubscriptionByIdRequest) (int64, error)
-	GetAll() ([]model.Subscription, error)
-	GetTotalSummByFilter(model.GetTotalSummByFilterRequest) (int, error)
-}
-
 type SubscriptionRepository struct {
 	Db *sql.DB
 }
@@ -160,7 +151,7 @@ func (s *SubscriptionRepository) Delete(subscriptionDeleteRequest model.DeleteSu
 		return 0, err
 	}
 	if rowAffected == 0 {
-		return 0, fmt.Errorf("record not deleted.")
+		return 0, fmt.Errorf("record not deleted")
 	}
 	return rowAffected, nil
 }
@@ -211,14 +202,6 @@ func (s *SubscriptionRepository) GetTotalSummByFilter(summRequest model.GetTotal
 	builder := squirrel.
 		Select(
 			"SUM(price) AS total",
-			// "id",
-			// "service_name",
-			// "price",
-			// "user_id",
-			// "start_date",
-			// "end_date",
-			// "created_at",
-			// "updated_at",
 		).
 		From("subscription").
 		PlaceholderFormat(squirrel.Dollar)

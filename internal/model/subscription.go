@@ -18,11 +18,11 @@ type Subscription struct {
 }
 
 type CreateSubscriptionRequest struct {
-	ServiceName string    `json:"service_name" validate:"required,min=3,max=150"`
-	Price       int       `json:"price" validate:"required,numeric"`
-	UserID      uuid.UUID `json:"user_id" validate:"required,uuid"`
-	StartDate   string    `json:"start_date" validate:"required"`
-	EndDate     *string   `json:"end_date"`
+	ServiceName string    `json:"service_name" validate:"required,min=3,max=150" default:"Yandex Plus"`
+	Price       int       `json:"price" validate:"required,numeric" default:"400"`
+	UserID      uuid.UUID `json:"user_id" validate:"required,uuid" default:"60601fee-2bf1-4721-ae6f-7636e79a0cba"`
+	StartDate   string    `json:"start_date" validate:"required" default:"07-2025"`
+	EndDate     *string   `json:"end_date" default:"07-2026"`
 }
 
 type UpdateSubscriptionRequest struct {

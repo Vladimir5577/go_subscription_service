@@ -94,6 +94,7 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
+                        "format": "uuid",
                         "description": "Subscription Id",
                         "name": "id",
                         "in": "path",
@@ -104,7 +105,19 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "strig"
+                            "type": "object"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "type": "object"
                         }
                     }
                 }
@@ -121,6 +134,7 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
+                        "format": "uuid",
                         "description": "Subscription Id",
                         "name": "id",
                         "in": "path",
@@ -131,7 +145,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "strig"
+                            "type": "object"
                         }
                     }
                 }
@@ -173,17 +187,37 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "Subscription Id",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
+                        "format": "uuid",
+                        "description": "User id",
+                        "name": "user_id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "service name",
+                        "name": "service_name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "format": "01-2006",
+                        "description": "From date",
+                        "name": "from_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "format": "01-2006",
+                        "description": "To date",
+                        "name": "to_date",
+                        "in": "query"
                     }
                 ],
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "strig"
+                            "type": "object"
                         }
                     }
                 }
@@ -201,21 +235,26 @@ const docTemplate = `{
             ],
             "properties": {
                 "end_date": {
-                    "type": "string"
+                    "type": "string",
+                    "default": "07-2026"
                 },
                 "price": {
-                    "type": "integer"
+                    "type": "integer",
+                    "default": 400
                 },
                 "service_name": {
                     "type": "string",
+                    "default": "Yandex Plus",
                     "maxLength": 150,
                     "minLength": 3
                 },
                 "start_date": {
-                    "type": "string"
+                    "type": "string",
+                    "default": "07-2025"
                 },
                 "user_id": {
-                    "type": "string"
+                    "type": "string",
+                    "default": "60601fee-2bf1-4721-ae6f-7636e79a0cba"
                 }
             }
         },

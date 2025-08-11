@@ -11,16 +11,6 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-// type SubscriptionHandlerInterface interface {
-// 	Create()
-// 	GetById()
-// 	Update()
-// 	Delete()
-
-// 	GetByFilter()
-// 	GetAll()
-// }
-
 type SubscriptionHandler struct {
 	subscriptionService service.SubscriptionServiceInterface
 }
@@ -35,8 +25,8 @@ func NewSubscriptionHandler(subscriptionService service.SubscriptionServiceInter
 // @Summary Create subscription
 // @Description Create subscription
 // @Tags subscriptions
-// @Accept  json
-// @Produce  json
+// @Accept json
+// @Produce json
 // @Param input body model.CreateSubscriptionRequest  true "create subscription"
 // @Success 200 strig json
 // @Router /subscription [post]
@@ -62,9 +52,11 @@ func (s *SubscriptionHandler) Create() http.HandlerFunc {
 // @Summary Get subscription by id
 // @Description Get subscriptions by id
 // @Tags subscriptions
-// @Produce  json
-// @Param id path string true "Subscription Id"
-// @Success 200 {strig} json
+// @Produce json
+// @Param id path string true "Subscription Id" Format(uuid)
+// @Success 200 {object} object
+// @Failure 400 {object} object
+// @Failure 404 {object} object
 // @Router /subscription/{id} [get]
 func (s *SubscriptionHandler) GetById() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
@@ -92,10 +84,10 @@ func (s *SubscriptionHandler) GetById() http.HandlerFunc {
 // @Summary Update subscription
 // @Description Update subscription
 // @Tags subscriptions
-// @Accept  json
-// @Produce  json
+// @Accept json
+// @Produce json
 // @Param input body model.UpdateSubscriptionRequest  true "update subscription"
-// @Success 200 strig json
+// @Success 200 {object} object
 // @Router /subscription [put]
 func (s *SubscriptionHandler) Update() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
@@ -120,8 +112,8 @@ func (s *SubscriptionHandler) Update() http.HandlerFunc {
 // @Description Delete subscriptions by id
 // @Tags subscriptions
 // @Produce  json
-// @Param id path string true "Subscription Id"
-// @Success 200 {strig} json
+// @Param id path string true "Subscription Id" Format(uuid)
+// @Success 200 {object} object
 // @Router /subscription/{id} [delete]
 func (s *SubscriptionHandler) Delete() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
@@ -146,12 +138,15 @@ func (s *SubscriptionHandler) Delete() http.HandlerFunc {
 }
 
 // GetTotalSummByFilter godoc
-// @Summary Get summ subscriptions
-// @Description Get summ subscriptions
+// @Summary Get total summ subscriptions
+// @Description Get total summ by filter subscriptions
 // @Tags subscriptions
 // @Produce  json
-// @Param id path string true "Subscription Id"
-// @Success 200 {strig} json
+// @Param user_id query string false "User id" Format(uuid)
+// @Param service_name query string false "service name"
+// @Param from_date query string false "From date" Format(01-2006)
+// @Param to_date query string false "To date" Format(01-2006)
+// @Success 200 {object} object
 // @Router /subscriptions/total_summ [get]
 func (s *SubscriptionHandler) GetTotalSummByFilter() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
@@ -162,7 +157,7 @@ func (s *SubscriptionHandler) GetTotalSummByFilter() http.HandlerFunc {
 		totalSummRequest.FromDate = r.URL.Query().Get("from_date")
 		totalSummRequest.ToDate = r.URL.Query().Get("to_date")
 
-		logrus.Info("Get total summ: %#v", totalSummRequest)
+		logrus.Printf("Get total summ: %#v", totalSummRequest)
 
 		err := helper.IsValid(totalSummRequest)
 		if err != nil {
@@ -181,10 +176,9 @@ func (s *SubscriptionHandler) GetTotalSummByFilter() http.HandlerFunc {
 }
 
 // GetAll godoc
-// @Summary Get add subscriptions
-// @Description Get add subscriptions
+// @Summary Get all subscriptions
+// @Description Get all subscriptions
 // @Tags subscriptions
-// // @Accept  json
 // @Produce  json
 // @Success 200 {array} model.Subscription
 // @Router /subscriptions [get]

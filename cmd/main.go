@@ -18,7 +18,7 @@ import (
 
 // @title Swagger Subscription Service
 // @version 1.0
-// @description This is a server for user subscriptions.
+// @description This is a server for users subscriptions.
 // @host localhost:8080
 func main() {
 
@@ -47,7 +47,6 @@ func main() {
 	r.Delete("/subscription/{id}", subscriptionHandler.Delete())
 	r.Get("/subscriptions", subscriptionHandler.GetAll())
 
-	// Home page.
 	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("Welcome to Subscriptions service."))
 	})

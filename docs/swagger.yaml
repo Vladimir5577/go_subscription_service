@@ -2,16 +2,21 @@ definitions:
   model.CreateSubscriptionRequest:
     properties:
       end_date:
+        default: 07-2026
         type: string
       price:
+        default: 400
         type: integer
       service_name:
+        default: Yandex Plus
         maxLength: 150
         minLength: 3
         type: string
       start_date:
+        default: 07-2025
         type: string
       user_id:
+        default: 60601fee-2bf1-4721-ae6f-7636e79a0cba
         type: string
     required:
     - price
@@ -112,6 +117,7 @@ paths:
       description: Delete subscriptions by id
       parameters:
       - description: Subscription Id
+        format: uuid
         in: path
         name: id
         required: true
@@ -122,7 +128,7 @@ paths:
         "200":
           description: OK
           schema:
-            type: strig
+            type: object
       summary: Delete subscription by id
       tags:
       - subscriptions
@@ -130,6 +136,7 @@ paths:
       description: Get subscriptions by id
       parameters:
       - description: Subscription Id
+        format: uuid
         in: path
         name: id
         required: true
@@ -140,7 +147,15 @@ paths:
         "200":
           description: OK
           schema:
-            type: strig
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            type: object
       summary: Get subscription by id
       tags:
       - subscriptions
@@ -163,10 +178,24 @@ paths:
     get:
       description: Get summ subscriptions
       parameters:
-      - description: Subscription Id
-        in: path
-        name: id
-        required: true
+      - description: User id
+        format: uuid
+        in: query
+        name: user_id
+        type: string
+      - description: service name
+        in: query
+        name: service_name
+        type: string
+      - description: From date
+        format: 01-2006
+        in: query
+        name: from_date
+        type: string
+      - description: To date
+        format: 01-2006
+        in: query
+        name: to_date
         type: string
       produces:
       - application/json
@@ -174,7 +203,7 @@ paths:
         "200":
           description: OK
           schema:
-            type: strig
+            type: object
       summary: Get summ subscriptions
       tags:
       - subscriptions
